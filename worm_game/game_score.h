@@ -5,23 +5,18 @@ class GameScore
 public:
 	GameScore(int player_num, std::string names[]);
 	~GameScore();
-
-	void DrawStrip(int char_num, int size);
-
 	void TableCreate(int* score_lines);
-
-	void TableUpdate(int player, int score_correction);
-
+	void TableUpdateScore(int player, int score_correction);
+	void TableUpdateTurn(int player);
 	char GetPlayerNum();
-
-	void ChangeOutputColor(int player);
-
-	void ResetOutputColor();
-
+	void GameOver();
 private:
-	std::string* names;
-	char player_num;
-	int* scores;
+	void ChangeOutputColor(int player);
+	void DrawStrip(int char_num, int size);
+	void ResetOutputColor();
+	wchar_t GetCharacterXY(int x, int y);
+	std::string* names_;
+	int player_num_;
+	int* scores_;
 };
-
 #endif

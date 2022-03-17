@@ -18,30 +18,30 @@
     <ClCompile Include="worm_game.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="GameScore.cpp">
+    <ClCompile Include="game_score.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Worm.cpp">
+    <ClCompile Include="worm.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Apples.cpp">
+    <ClCompile Include="apples.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameScore.h">
+    <ClInclude Include="game_score.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Apples.h">
+    <ClInclude Include="apples.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Worm.h">
+    <ClInclude Include="worm.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="constants.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="MoveXY.h">
+    <ClInclude Include="move_x_y.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

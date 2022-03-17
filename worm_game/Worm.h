@@ -1,12 +1,12 @@
 #ifndef WORM_H
 #define WORM_H
-#include "Apples.h"
 #include <deque>
-#include "GameScore.h"
+#include "apples.h"
+#include "game_score.h"
 class Worm
 {
 public:
-	Worm(int FieldSizeByX, int FieldSizeByY, Apples* apples, GameScore* score, int WormNum);
+	Worm(Apples* apples, GameScore* score, int worm_num);
 	void WormShowOnScreen();
 	bool IsDestroyed();
 	void WormMove();
@@ -14,7 +14,7 @@ private:
 	void IncreaseWormLength(char character_ahead_of_the_worm);
 	void DestroyWorm();
 	void WormUpdateOnScreen(int worm_move_correction_x, int worm_move_correction_y);
-	void WormBodySegmentDrawOnXY(int x, int y, std::string BodySegmentColor);
+	void WormBodySegmentDrawOnXY(int x, int y, std::string body_segment_color);
 	wchar_t GetCharacterAheadOfTheWorm(int worm_move_correction_x, int worm_move_correction_y);
 	struct BodySegment
 	{
@@ -25,14 +25,13 @@ private:
 			return !(this->x == other.x && this->y == other.y);
 		}
 	};
-	bool destroyed = false;
-	int WormSize = 4;
+	bool destroyed_ = false;
+	int worm_size_ = 4;
 	int worm_num_;
-	Apples* apples;
-	GameScore* score;
+	Apples* apples_;
+	GameScore* score_;
 	enum WormDirection { UP, RIGHT, DOWN, LEFT }; //0 1 2 3
-	int LastWormDirection = UP;
-	std::deque<BodySegment> worm_body;
+	int last_worm_direction_ = UP;
+	std::deque<BodySegment> worm_body_;
 };
-
 #endif
