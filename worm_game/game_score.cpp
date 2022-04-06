@@ -28,9 +28,9 @@ void GameScore::DrawStrip(int char_num, int size)
 }
 
 
-void GameScore::ChangeOutputColor(int player)
+void GameScore::ChangeOutputColor(std::string color)
 {
-	std::cout << "\x1b[3" + kWormColors[player] + "m";
+	std::cout << "\x1b[3" + color + "m";
 }
 
 void GameScore::ResetOutputColor()
@@ -67,7 +67,7 @@ void GameScore::TableCreate(int* current_score_line)
 		if (draw_step % 2 != 0)
 		{
 			int curent_player = (draw_step / 2) - 1;
-			ChangeOutputColor(curent_player);
+			ChangeOutputColor(kWormColors[curent_player] + ";4");
 			std::cout << std::setw(2) << char(204) << " ";
 			std::cout.width(3);
 			std::cout << names_[curent_player] << " : ";
@@ -78,7 +78,7 @@ void GameScore::TableCreate(int* current_score_line)
 		else
 		{
 			int curent_player = (draw_step / 2) - 2;
-			ChangeOutputColor(curent_player);
+			ChangeOutputColor(kWormColors[curent_player] + ";4");
 			std::cout << std::setw(2) << char(185);
 			DrawStrip(176, 13);
 			std::cout << char(204);
@@ -90,7 +90,7 @@ void GameScore::TableCreate(int* current_score_line)
 
 void GameScore::TableUpdateScore(int player, int score_correction)
 {
-	ChangeOutputColor(player);
+	ChangeOutputColor(kWormColors[player] + ";4");
 	int y = 4 + 2 * player;
 	int x = kFieldSizeByX + 13;
 	MoveXY(x, y);
@@ -111,7 +111,7 @@ wchar_t GameScore::GetCharacterXY(int x, int y)
 
 void GameScore::TableUpdateTurn(int player)
 {
-	ChangeOutputColor(player);
+	ChangeOutputColor(kWormColors[player]);
 	int y = 4 + 2 * player;
 	int x = kFieldSizeByX + 21;
 	MoveXY(x, y);
@@ -140,7 +140,7 @@ void GameScore::GameOver()
 	for (int i = 0; i < player_num_; i++)
 		score_output.push_back({ scores_[i], names_[i],i });
 	std::sort(score_output.begin(), score_output.end());
-	ChangeOutputColor(0);
+	ChangeOutputColor(kWormColors[0]);
 	system("cls");
 	std::cout << std::setw(130) << "|**\\        ########       #      ##   ##  ######           ######  #        #  ######  ######        /**|\n";
 	std::cout << std::setw(130) << "|*>*\\       #             # #     # # # #  #                #    #  #        #  #       #    #       /*<*|\n";
@@ -165,12 +165,12 @@ void GameScore::GameOver()
 		}
 		std::cout << "|";
 		ResetOutputColor();
-		ChangeOutputColor(score_output[i].player_num);
+		ChangeOutputColor(kWormColors[score_output[i].player_num]);
 		std::cout << score_output[i].name << " - ";
 		std::cout.width(5);
 		std::cout << score_output[i].score;
 		ResetOutputColor();
-		ChangeOutputColor(0);
+		ChangeOutputColor(kWormColors[0]);
 		std::cout << "|";
 		for (int j = 0; j < 45; j++)
 		{
@@ -183,7 +183,7 @@ void GameScore::GameOver()
 		std::cout << "|\n";
 	}
 	std::cout << std::setw(30);
-	ChangeOutputColor(0);
+	ChangeOutputColor(kWormColors[0]);
 	std::cout << "\\=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\\===========/-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-/";
 	ResetOutputColor();
 }

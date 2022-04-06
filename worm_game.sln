@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "worm_game", "worm_game\worm_game.vcxproj", "{89758B70-3E5E-4A3E-BCDC-E7FB3043FBEB}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "worm_game_server", "worm_game\worm_game.vcxproj", "{89758B70-3E5E-4A3E-BCDC-E7FB3043FBEB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "worm_game_client", "worm_game_client\worm_game_client.vcxproj", "{0063F481-B9E1-418F-8904-6ACCD93BA3E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,14 @@ Global
 		{89758B70-3E5E-4A3E-BCDC-E7FB3043FBEB}.Release|x64.Build.0 = Release|x64
 		{89758B70-3E5E-4A3E-BCDC-E7FB3043FBEB}.Release|x86.ActiveCfg = Release|Win32
 		{89758B70-3E5E-4A3E-BCDC-E7FB3043FBEB}.Release|x86.Build.0 = Release|Win32
+		{0063F481-B9E1-418F-8904-6ACCD93BA3E4}.Debug|x64.ActiveCfg = Debug|x64
+		{0063F481-B9E1-418F-8904-6ACCD93BA3E4}.Debug|x64.Build.0 = Debug|x64
+		{0063F481-B9E1-418F-8904-6ACCD93BA3E4}.Debug|x86.ActiveCfg = Debug|Win32
+		{0063F481-B9E1-418F-8904-6ACCD93BA3E4}.Debug|x86.Build.0 = Debug|Win32
+		{0063F481-B9E1-418F-8904-6ACCD93BA3E4}.Release|x64.ActiveCfg = Release|x64
+		{0063F481-B9E1-418F-8904-6ACCD93BA3E4}.Release|x64.Build.0 = Release|x64
+		{0063F481-B9E1-418F-8904-6ACCD93BA3E4}.Release|x86.ActiveCfg = Release|Win32
+		{0063F481-B9E1-418F-8904-6ACCD93BA3E4}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

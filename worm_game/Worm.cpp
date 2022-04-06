@@ -36,22 +36,22 @@ void Worm::WormBodySegmentDrawOnXY(int x, int y, std::string body_segment_color)
 
 void Worm::WormShowOnScreen()
 {
-    WormBodySegmentDrawOnXY(worm_body_[0].x, worm_body_[0].y, "0;1");
+    WormBodySegmentDrawOnXY(worm_body_[0].x, worm_body_[0].y, "0;1;4");
     for (int i = 1; i < worm_size_; i++)
     {
-        WormBodySegmentDrawOnXY(worm_body_[i].x, worm_body_[i].y, kWormColors[worm_num_]);
+        WormBodySegmentDrawOnXY(worm_body_[i].x, worm_body_[i].y, kWormColors[worm_num_] + ";4");
     }
 }
 
 void Worm::WormUpdateOnScreen(int worm_move_correction_x, int worm_move_correction_y)
 {
-    WormBodySegmentDrawOnXY(worm_body_.front().x, worm_body_.front().y, kWormColors[worm_num_]);
+    WormBodySegmentDrawOnXY(worm_body_.front().x, worm_body_.front().y, kWormColors[worm_num_] + ";4");
 
     int new_head_position_x = worm_body_.front().x + worm_move_correction_x;
     int new_head_position_y = worm_body_.front().y + worm_move_correction_y;
     worm_body_.push_front({ new_head_position_x,new_head_position_y });
 
-    WormBodySegmentDrawOnXY(new_head_position_x, new_head_position_y, "0;1");
+    WormBodySegmentDrawOnXY(new_head_position_x, new_head_position_y, "0;1;4");
     apples_->LockCell(new_head_position_x, new_head_position_y);
 
     BodySegment old_tail_coord = worm_body_.back();

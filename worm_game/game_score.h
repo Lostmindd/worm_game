@@ -11,7 +11,7 @@ public:
 	char GetPlayerNum();
 	void GameOver();
 private:
-	void ChangeOutputColor(int player);
+	void ChangeOutputColor(std::string color);
 	void DrawStrip(int char_num, int size);
 	void ResetOutputColor();
 	wchar_t GetCharacterXY(int x, int y);

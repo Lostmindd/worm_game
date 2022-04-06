@@ -21,10 +21,9 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{89758b70-3e5e-4a3e-bcdc-e7fb3043fbeb}</ProjectGuid>
-    <RootNamespace>wormgame</RootNamespace>
+    <ProjectGuid>{0063f481-b9e1-418f-8904-6accd93ba3e4}</ProjectGuid>
+    <RootNamespace>wormgameclient</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>worm_game_server</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -140,17 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="game_score.cpp" />
-    <ClCompile Include="apples.cpp" />
-    <ClCompile Include="worm.cpp" />
-    <ClCompile Include="worm_game.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="apples.h" />
-    <ClInclude Include="game_score.h" />
-    <ClInclude Include="move_x_y.h" />
-    <ClInclude Include="constants.h" />
-    <ClInclude Include="worm.h" />
+    <ClCompile Include="worm_game_client.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
