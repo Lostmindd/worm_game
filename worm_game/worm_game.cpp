@@ -34,6 +34,43 @@ SOCKET AcceptPlayer(SOCKET listen_socket, SOCKADDR_IN addr)
     return сonnection;
 }
 
+void SendMessageToHosts(int host_num, SOCKET* сonnections, char* msg, int msg_size, int msg_sender = -1)
+{
+    for (int i = 0; i < host_num; i++)
+    {
+        if (i == msg_sender)
+            continue;
+        send(сonnections[i], msg, msg_size, NULL);
+    }
+}
+
+char** ReceiveNicknames(SOCKET* сonnections, int players_num)
+{
+    char** nicknames_in_char = new char* [players_num];
+    for (int i = 0; i < players_num; i++)
+    {
+        nicknames_in_char[i] = new char[4];
+        recv(сonnections[i], nicknames_in_char[i], 4, NULL);
+    }
+    return nicknames_in_char;
+}
+
+void StartGame()
+{
+    std::cout << "Game will start in: ";
+    for (int i = 5; i > 0; i--)
+    {
+        std::cout << i;
+        Sleep(500);
+        std::cout << ".";
+        Sleep(250);
+        std::cout << ".";
+        Sleep(250);
+        std::cout << " ";
+    }
+    std::cout << "\nThe game started\n";
+}
+
 int main()
 {
     WSAData wsaData;
@@ -59,37 +96,31 @@ int main()
     int players_num;
     std::cout << "Enter number of players: ";
     std::cin >> players_num;
-    system("cls");
     std::cout << "Server started...\n";
 
     SOCKET* сonnections = new SOCKET[players_num];
     for (int i = 0; i < players_num; i++)
-    {
         сonnections[i] = AcceptPlayer(listen_socket, addr);
-    }
 
     closesocket(listen_socket);
+    std::cout << "All players joined.\n";
 
-    std::string* nicknames = new std::string[players_num];// убрать
-    char* nicknames_in_char = new char[4 * players_num];
-    for (int i = 0, j = 0; i < players_num; i++)
-    {
-        char nickname[4];
-        recv(сonnections[i], nickname, 4, NULL);
-        for (int k = 0; k < 4; k++)
-        {
-            nicknames_in_char[j] = nickname[k];
-            j++;
-        }
-        nicknames[i] = std::string(nickname);// убрать
+    char** nicknames_in_char = ReceiveNicknames(сonnections, players_num);// мб очистить раньше чем в конце
+
+    SendMessageToHosts(players_num, сonnections, (char*)&players_num, sizeof(int));
+    for (int i = 0; i < players_num; i++)
+    {   
+        SendMessageToHosts(players_num, сonnections, nicknames_in_char[i], sizeof(nicknames_in_char[i]));
     }
 
+    StartGame();
+    enum PackeType { YOUTURN, PLAYERSMOVEMENTS, WORMDESTROYED, RANDOMSEED, GAMEOVER };
+
+    int random_seed = time(0);
     for (int i = 0; i < players_num; i++)
     {
-        send(сonnections[i], (char*)&players_num, sizeof(int), NULL);
-        send(сonnections[i], nicknames_in_char, players_num *4, NULL);
+        
     }
-
     //
 
 
@@ -141,6 +172,7 @@ int main()
             std::cout << char(219);
         }
         std::cout << "\x1b[0m";
+
         Apples apples;
         apples.CreateApples(5);
         Worm worm = {&apples,&score,0 };
@@ -160,8 +192,9 @@ int main()
     for (int i = 0; i < players_num; i++)
     {
         closesocket(сonnections[i]);
+        delete nicknames_in_char[i];
     }
     delete[] сonnections;
-    delete[] nicknames;
+    delete[] nicknames_in_char;
     WSACleanup();
 }

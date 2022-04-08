@@ -139,7 +139,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="apples.cpp" />
+    <ClCompile Include="game_score.cpp" />
+    <ClCompile Include="worm.cpp" />
     <ClCompile Include="worm_game_client.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="apples.h" />
+    <ClInclude Include="constants.h" />
+    <ClInclude Include="game_score.h" />
+    <ClInclude Include="move_x_y.h" />
+    <ClInclude Include="worm.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
