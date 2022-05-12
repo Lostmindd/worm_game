@@ -10,7 +10,8 @@ public:
 	Worm();
 	void WormShowOnScreen();
 	bool IsDestroyed();
-	void WormMove();
+	void WormMove(char ch);
+	char WormMoveFromKeyboard();
 private:
 	void IncreaseWormLength(char character_ahead_of_the_worm);
 	void DestroyWorm();
@@ -31,8 +32,8 @@ private:
 	int worm_num_;
 	Apples* apples_;
 	GameScore* score_;
-	enum WormDirection { UP, RIGHT, DOWN, LEFT }; //0 1 2 3
-	int last_worm_direction_ = UP;
+	enum class WormDirection { UP, RIGHT, DOWN, LEFT }; //0 1 2 3
+	WormDirection last_worm_direction_ = WormDirection::UP;
 	std::deque<BodySegment> worm_body_;
 };
 #endif

@@ -185,6 +185,7 @@ void GameScore::GameOver()
 	ChangeOutputColor(kWormColors[0]);
 	std::cout << "\\=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\\===========/-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-/";
 	ResetOutputColor();
+	std::cout << "\n";
 }
 
 char GameScore::GetPlayerNum() 

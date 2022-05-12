@@ -102,53 +102,75 @@ void Worm::IncreaseWormLength(char character_ahead_of_the_worm)
     }
 }
 
-void Worm::WormMove()
+void Worm::WormMove(char ch)
 {
-    if (destroyed_ == true) return;
 
-    score_->TableUpdateTurn(worm_num_);
-    while(1)
+    int x_corection;
+    int y_corection;
+    switch (ch)
     {
-        int x_corection;
-        int y_corection;
-        char ch = _getch();
-        if (ch == 72 && last_worm_direction_ != DOWN) //up
-        {
-            x_corection = 0;
-            y_corection = -1;
-            last_worm_direction_ = UP;
-        }
-        else if (ch == 77 && last_worm_direction_ != LEFT) //right
-        {
-            x_corection = 2;
-            y_corection = 0;
-            last_worm_direction_ = RIGHT;
-        }
-        else if (ch == 75 && last_worm_direction_ != RIGHT) //left
-        {
-            x_corection = -2;
-            y_corection = 0;
-            last_worm_direction_ = LEFT;
-        }
-        else if (ch == 80 && last_worm_direction_ != UP) //down
-        {
-            x_corection = 0;
-            y_corection = 1;
-            last_worm_direction_ = DOWN;
-        }
-        else continue;
-
-        wchar_t character_ahead_of_the_worm = GetCharacterAheadOfTheWorm(x_corection, y_corection);
-        if (character_ahead_of_the_worm == 32)
-            WormUpdateOnScreen(x_corection, y_corection);
-        else if (character_ahead_of_the_worm >= 49 && character_ahead_of_the_worm <= 53)
-        {
-            WormUpdateOnScreen(x_corection, y_corection);
-            IncreaseWormLength(character_ahead_of_the_worm);
-        }
-        else
-            DestroyWorm();
+    case 72:
+        x_corection = 0;
+        y_corection = -1;
+        last_worm_direction_ = WormDirection::UP;
+        break;
+    case 77:
+        x_corection = 2;
+        y_corection = 0;
+        last_worm_direction_ = WormDirection::RIGHT;
+        break;
+    case 75:
+        x_corection = -2;
+        y_corection = 0;
+        last_worm_direction_ = WormDirection::LEFT;
+        break;
+    case 80:
+        x_corection = 0;
+        y_corection = 1;
+        last_worm_direction_ = WormDirection::DOWN;
         break;
     }
-    score_->TableUpdateTurn(worm_num_);
+
+    wchar_t character_ahead_of_the_worm = GetCharacterAheadOfTheWorm(x_corection, y_corection);
+    if (character_ahead_of_the_worm == 32)
+        WormUpdateOnScreen(x_corection, y_corection);
+    else if (character_ahead_of_the_worm >= 49 && character_ahead_of_the_worm <= 53)
+    {
+        WormUpdateOnScreen(x_corection, y_corection);
+        IncreaseWormLength(character_ahead_of_the_worm);
+    }
+    else
+       DestroyWorm();
+}
+
+char Worm::WormMoveFromKeyboard()
+{
+    FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
+    if (destroyed_ == true) return -1;
+    char ch;
+    while (1)
+    {
+        ch = _getch();
+        if (ch == 72 && last_worm_direction_ != WormDirection::DOWN) //up
+        {
+            WormMove(ch);
+            return ch;
+        }
+        else if (ch == 77 && last_worm_direction_ != WormDirection::LEFT) //right
+        {
+            WormMove(ch);
+            return ch;
+        }
+        else if (ch == 75 && last_worm_direction_ != WormDirection::RIGHT) //left
+        {
+            WormMove(ch);
+            return ch;
+        }
+        else if (ch == 80 && last_worm_direction_ != WormDirection::UP) //down
+        {
+            WormMove(ch);
+            return ch;
+        }
+        else continue;
+    }
 }

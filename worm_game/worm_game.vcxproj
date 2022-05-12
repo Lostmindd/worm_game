@@ -18,6 +18,9 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="worm_game.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -139,19 +142,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="game_score.cpp" />
-    <ClCompile Include="apples.cpp" />
-    <ClCompile Include="worm.cpp" />
-    <ClCompile Include="worm_game.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="apples.h" />
-    <ClInclude Include="game_score.h" />
-    <ClInclude Include="move_x_y.h" />
-    <ClInclude Include="constants.h" />
-    <ClInclude Include="worm.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

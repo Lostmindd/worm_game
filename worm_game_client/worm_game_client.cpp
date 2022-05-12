@@ -5,13 +5,11 @@
 #include <string>
 #include <iomanip>
 
-#include "game_score.h"
-#include "move_x_y.h"
-#include "constants.h"
 #include "worm.h"
-const std::string kWormColors[8] = { "1;1","2;1", "3;1", "4;1", "5;1", "6;1", "3", "1" };
-const int kFieldSizeByX = 119;
-const int kFieldSizeByY = 30;
+
+extern const std::string kWormColors[8] = { "1;1","2;1", "3;1", "4;1", "5;1", "6;1", "3", "1" };
+extern const int kFieldSizeByX = 119;
+extern const int kFieldSizeByY = 30;
 
 HANDLE std_out_handle = GetStdHandle(STD_OUTPUT_HANDLE);
 void MoveXY(int x, int y)
@@ -62,6 +60,22 @@ std::string* ReceiveNicknames(SOCKET connection, int players_num)
     return nicknames;
 }
 
+void StartGame()
+{
+    std::cout << "Game will start in: ";
+    for (int i = 5; i > 0; i--)
+    {
+        std::cout << i;
+        Sleep(500);
+        std::cout << ".";
+        Sleep(250);
+        std::cout << ".";
+        Sleep(250);
+        std::cout << " ";
+    }
+    std::cout << "\nThe game started\n";
+}
+
 int main()
 {
     //
@@ -76,20 +90,18 @@ int main()
     std::string adress = "127.0.0.1:1111";
     std::cout << ">> enter your nickname(maximum 3 characters) <<\n";
     std::string str;
-    str = "asd"; //убрать
-    //std::cin >> str;
+    std::cin >> str;
     std::string name = str.substr(0, 3);
-    auto pos = adress.find(":"); //убрать
-    /*std::string::size_type pos ;
+    std::string::size_type pos ;
     do 
     {
         system("cls");
         std::cout << ">> Enter ip and port to connect to the server (ip:port) <<\n";
         std::cin >> adress;
-        pos = str.find(":");
+        pos = adress.find(":");
 
         
-    } while (pos == std::string::npos);*/
+    } while (pos == std::string::npos);
     std::string ip = adress.substr(0, pos); //ip
     std::string port = adress.substr(pos + 1); //port
 
@@ -117,13 +129,17 @@ int main()
         return 1;
     }
     std::cout << "Connected to " << adress << ".\n";
-
     send(connection, name.c_str(), 4, NULL);
 
     int players_num = 0;
     recv(connection, (char*)&players_num, 4, NULL);
+    int worm_number;
+    recv(connection, (char*)&worm_number, 4, NULL);
     std::string* nicknames = ReceiveNicknames(connection, players_num);
     system("cls");
+    MoveXY(kFieldSizeByX/2, 10);
+    StartGame();
+
     GameScore score = { players_num, nicknames };
     CreateGameField(score);
     Apples apples;
@@ -133,9 +149,44 @@ int main()
         worms[i] = Worm{ &apples,&score,i };
         worms[i].WormShowOnScreen();
     }
-    enum PackeType { YOUTURN, PLAYERSMOVEMENTS, WORMDESTROYED, RANDOMSEED, GAMEOVER };
+    enum class PackeType  { YOUTURN, PLAYERMOVEMENTS, RANDOMSEED, GAMEOVER };
+    PackeType packet_type;
+    char move;
+    while (true)
+    {
 
+        recv(connection, (char*)&packet_type, sizeof(packet_type), NULL);
+        switch (packet_type)
+        {
+        case PackeType::YOUTURN:
+            score.TableUpdateTurn(worm_number);
+            move = worms[worm_number].WormMoveFromKeyboard();
+            send(connection, &move, sizeof(move), NULL);
+            score.TableUpdateTurn(worm_number);
+            break;
+        
+        case PackeType::PLAYERMOVEMENTS:
+            int worm_num;
+            recv(connection, (char*)&worm_num, sizeof(worm_num), NULL);
+            recv(connection, &move, sizeof(move), NULL);
+            worms[worm_num].WormMove(move);
+            break;
 
+        case PackeType::RANDOMSEED:
+            int random_seed;
+            recv(connection, (char*)&random_seed, sizeof(random_seed), NULL);
+            apples.CreateApples(players_num, random_seed);
+            break;
+
+        case PackeType::GAMEOVER:
+            score.GameOver();
+            system("pause");
+            exit(1);
+
+        default:
+            break;
+        }
+    }
 
     system("pause");
     delete[] nicknames;

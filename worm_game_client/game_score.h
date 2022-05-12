@@ -1,5 +1,5 @@
-#ifndef GameScore_H
-#define GameScore_H
+#ifndef GAMESCORE_H
+#define GAMESCORE_H
 class GameScore
 {
 public:

@@ -29,7 +29,7 @@ void Apples::UnlockCell(int x, int y) //Разблокирует клетку для появления яблок
 void Apples::CreateApples(int count, int random_seed)
 {
 	srand(random_seed);
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < count; i++)
 		UpdateApple();
 }
 
