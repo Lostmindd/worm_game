@@ -142,6 +142,6 @@ int main()
     }
     delete[] сonnections;
     delete[] nicknames_in_char;
-    delete worm_is_destroyed;
+    delete[] worm_is_destroyed;
     WSACleanup();
 }
